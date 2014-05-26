@@ -14,10 +14,7 @@ module RussianPhone
   end
 end
 
-unless Object.const_defined?("Rails")
-  I18n.load_path = Dir[File.join('config', 'locales', '**', '*.{rb,yml}')]
-  I18n.backend.load_translations
-end
+I18n.load_path += Dir.glob(File.join(File.dirname(__FILE__), '..', 'config', 'locales', '**', '*.{rb,yml}'))
 
 if Object.const_defined?("RailsAdmin")
   require "russian_phone/rails_admin"
