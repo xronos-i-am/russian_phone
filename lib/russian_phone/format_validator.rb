@@ -5,7 +5,7 @@ module RussianPhone
     def validate(record)
       options[:fields].each do |field|
         unless record.send(field).phone.blank?
-          record.errors[field] << 'Неверный телефонный номер' unless record.send(field).valid? && record.send(field).city_allowed?
+          record.errors[field] << I18n.t('russian_phone.incorrect_number') unless record.send(field).valid? && record.send(field).city_allowed?
         end
       end
     end

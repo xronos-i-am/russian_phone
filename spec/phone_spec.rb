@@ -3,6 +3,10 @@
 require 'spec_helper'
 
 describe RussianPhone do
+  before :each do 
+    I18n.locale = :ru
+  end
+
   describe 'clean' do
     it 'should remove everything except numbers from string' do
       RussianPhone::Number.clean('+7 (906) 111-11-11').should eq '79061111111'
@@ -395,6 +399,14 @@ describe RussianPhone do
       u.valid?.should be_false
       u.save.should be_false
       u.errors.messages.should eq({:phone =>["Неверный телефонный номер"]})
+    end
+
+    it 'should fail validation with correct locale when validate is on and phone is invalid' do
+      I18n.locale = :en
+      u = UserWithValidation.new(phone: '123')
+      u.valid?.should be_false
+      u.save.should be_false
+      u.errors.messages.should eq({:phone =>["Incorrect phone number"]})
     end
 
     it 'should pass validation when validate is on and phone is valid' do

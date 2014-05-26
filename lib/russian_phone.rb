@@ -14,7 +14,11 @@ module RussianPhone
   end
 end
 
+unless Object.const_defined?("Rails")
+  I18n.load_path = Dir[File.join('config', 'locales', '**', '*.{rb,yml}')]
+  I18n.backend.load_translations
+end
+
 if Object.const_defined?("RailsAdmin")
   require "russian_phone/rails_admin"
 end
-
